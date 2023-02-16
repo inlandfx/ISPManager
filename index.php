@@ -94,7 +94,7 @@ if(isset($_GET['action']) && $_GET['action']=="datausage"){
 	
 	$password = file_get_contents('/volume1/web/ispmgr/password.txt');
 	
-	$loginattempt = $cc->post('http://isp.hathway.net:7406/selfcare/index.php?r=login/loginas','username=Sugato.B&password='.$password.'&servicetype=BB');
+	$loginattempt = $cc->post('http://isp.hathway.net:7406/selfcare/index.php?r=login/loginas','username=admin&password='.$password.'&servicetype=BB');
 	
 	//First lets check if the password has expired and needs changing
 	//die(print_r($loginattempt));
