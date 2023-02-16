@@ -6,13 +6,13 @@ In case your connection is acting patchy, the script can even login to your ISP'
 ## Setup: 
 1. Setup a CRON job to run the connection monitoring script at a set frequency. For e.g. I had set mine to run every 5 minutes
 
-```
+```bash
 (printf "\r[" && printf "$(date +"%d-%b-%Y %I:%M %p %A")" && printf "] " &&  php  -f /path/to/script/index.php action=checknet restartok=1 mail=yourname@gmail.com) >> /path/to/script/logs/net-$(date +"%Y-%m").log
 ```
 
 2. Setup another job to run the spedtest CLI script and pipe all output to the designated logging path
 
-```
+```bash
 /path/to/script/speedtest-cli >> /path/to/script/speedlogs/speed-$(date +"%Y-%m-%d %k.%M").log
 ```
 
@@ -20,13 +20,13 @@ In case your connection is acting patchy, the script can even login to your ISP'
 
 4. Setup the speed reports to mail you the details. You can provide multiple email id's with commas
 
-```
+```bash
 php -f /path/to/script/index.php mail=yourname@gmail.com,secondname@gmail.com
 ```
 
 5. Setup your ISP's CRM tool url and page scheme here...
 
-```
+```php
 	$cc = new cURL(); 
 	
 	$password = file_get_contents('/volume1/web/ispmgr/password.txt');
