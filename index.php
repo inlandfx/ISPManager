@@ -120,19 +120,19 @@ if(isset($_GET['action']) && $_GET['action']=="datausage"){
 		//Create a new PHPMailer instance
 		$mail = new PHPMailer;
 		
-		$mailid = array("sugato.b@gmail.com");
+		$mailid = array("yourname@gmail.com");
 		
 		//Set who the message is to be sent from
-		$mail->setFrom('sugato.b@gmail.com', 'Omnibus');
+		$mail->setFrom('yourname@gmail.com', 'YourAppName');
 		//Set an alternative reply-to address
-		$mail->addReplyTo('sugato.b@gmail.com', 'Sugato Banerjee');
+		$mail->addReplyTo('yourname@gmail.com', 'Jane Doe');
 		//Set who the message is to be sent to
 		foreach($mailid as $id) { $mail->addAddress(urldecode($id), ''); }
 		
 		//Set the subject line
 		$mail->Subject = 'Broadband Data - Hathway Password changed';
 
-		$mail->msgHTML("Hi <br><br> Your Hathway password had expired so I've reset it to <strong>".$password."</strong><br><br> Cheers,<br>Calcium Omnibus");
+		$mail->msgHTML("Hi <br><br> Your Hathway password had expired so I've reset it to <strong>".$password."</strong><br><br> Cheers,<br>Calcium YourAppName");
 		
 		if($mail->send())
 			echo '\r\nPassword change notification mailed successfully mailed to '.urldecode($_GET['mail']);
@@ -141,7 +141,7 @@ if(isset($_GET['action']) && $_GET['action']=="datausage"){
 	
 	
 		//Now redo the login attempt
-		$loginattempt = $cc->post('http://isp.hathway.net:7607/selfcare/index.php?r=login/loginas','username=Sugato.B&password='.$password.'&servicetype=BB');
+		$loginattempt = $cc->post('http://isp.hathway.net:7607/selfcare/index.php?r=login/loginas','username=admin&password='.$password.'&servicetype=BB');
 	}
 	
 	if(strpos($loginattempt['response'],"\"statustext\":\"success\"") != FALSE){
@@ -168,12 +168,12 @@ if(isset($_GET['action']) && $_GET['action']=="datausage"){
 			if(floatval($datausage[0])== 0){ //which means usage is complete exhausted
 				$usagetext = 'Broadband Data Completely Exhausted - '.($datausage[0]).' of '.($datausage[1]).' GB remaining (Cycle renews on '.(($cycledate < date("d")) ? $cycledate.date("-M-Y",time()+30*24*60*60):$cycledate.date("-M-Y")).')';
 				
-				$maintext = "Hi <br><br> You're internet quota is exhausted little one and now I'm sad to admit your the life's speed will now be reduced to 1 Mbps.<br>This situation will continue for the next ".round((strtotime($cycledate.date("-M-Y"))-time())/(60*60*24),0)." days until your billing cycle renews <br><br> Cheers,<br>Calcium Omnibus";
+				$maintext = "Hi <br><br> You're internet quota is exhausted little one and now I'm sad to admit your the life's speed will now be reduced to 1 Mbps.<br>This situation will continue for the next ".round((strtotime($cycledate.date("-M-Y"))-time())/(60*60*24),0)." days until your billing cycle renews <br><br> Cheers,<br>Calcium YourAppName";
 			}
 			else{
 				$usagetext = 'Broadband Data Usage Warning - only '.($datausage[0]).' of '.($datausage[1]).' GB remaining (Cycle renews on '.(($cycledate < date("d")) ? $cycledate.date("-M-Y",time()+30*24*60*60):$cycledate.date("-M-Y")).')';
 				
-				$maintext = "Hi <br><br> Be wary little one for soon your the connection speed will be reduced to 1 Mbps.<br>Try to use the internet wisely for the next ".round((strtotime($cycledate.date("-M-Y"))-time())/(60*60*24),0)." days :-) <br><br> Cheers,<br>Calcium Omnibus";
+				$maintext = "Hi <br><br> Be wary little one for soon your the connection speed will be reduced to 1 Mbps.<br>Try to use the internet wisely for the next ".round((strtotime($cycledate.date("-M-Y"))-time())/(60*60*24),0)." days :-) <br><br> Cheers,<br>Calcium YourAppName";
 			}
 			
 			if(date("j",time()-24*60*60)."" >= $cycledate && file_exists($datalock) && date('j',filemtime($datalock)) <= $cycledate) //If the date lock file warning was created prior to the cycle date then lets delete it
@@ -190,9 +190,9 @@ if(isset($_GET['action']) && $_GET['action']=="datausage"){
 				$mailid = explode(",",$_GET['mail']);
 				
 				//Set who the message is to be sent from
-				$mail->setFrom('sugato.b@gmail.com', 'Omnibus');
+				$mail->setFrom('yourname@gmail.com', 'YourAppName');
 				//Set an alternative reply-to address
-				$mail->addReplyTo('sugato.b@gmail.com', 'Sugato Banerjee');
+				$mail->addReplyTo('yourname@gmail.com', 'Jane Doe');
 				//Set who the message is to be sent to
 				foreach($mailid as $id) { $mail->addAddress(urldecode($id), ''); }
 				
@@ -236,10 +236,10 @@ else if(isset($_GET['action']) && $_GET['action']=="checknet"){
 			$mailid = explode(",",$_GET['mail']);
 			
 			//Set who the message is to be sent from
-			$mail->setFrom('sugato.b@gmail.com', 'Omnibus');
+			$mail->setFrom('yourname@gmail.com', 'YourAppName');
 			
 			//Set an alternative reply-to address
-			$mail->addReplyTo('sugato.b@gmail.com', 'Sugato Banerjee');
+			$mail->addReplyTo('yourname@gmail.com', 'Jane Doe');
 			
 			//Set who the message is to be sent to
 			foreach($mailid as $id) { $mail->addAddress(urldecode($id), ''); }
@@ -247,7 +247,7 @@ else if(isset($_GET['action']) && $_GET['action']=="checknet"){
 			//Set the subject line
 			$mail->Subject = 'Internet Connection Disrupted - Router Restart Initiated at '.(($rebootlog != "") ? date('g.ia d-M-Y',$rebootlog):'Unknown Event Time');
 
-			$mail->msgHTML("Regards,<br>Calcium Omnibus");
+			$mail->msgHTML("Regards,<br>Calcium YourAppName");
 			
 			if($mail->send()){
 				//Now that the user has been mailed, delete the log file
@@ -280,7 +280,7 @@ else if(isset($_GET['action']) && $_GET['action']=="checknet"){
 		//Action router restart for Router Model D-Link DIR-615, Firmware ver: 20.09
 		
 		$cc = new cURL(); 
-		$cc->post('http://192.168.0.1/login.cgi','username=Omnibus&password=calcium&submit.htm?login.htm=Send');
+		$cc->post('http://192.168.0.1/login.cgi','username=YourAppName&password=calcium&submit.htm?login.htm=Send');
 		$cc->post('http://192.168.0.1/form2reboot.cgi','reboot=Reboot&submit.htm?reboot.htm=Send');
 	}	
 	else
@@ -384,7 +384,7 @@ else if(isset($_GET['action']) && $_GET['action']=="checknet"){
 			Hi <br><br> I've prepared the broadband consumption report for the last ".count($datachartX)." days. See the chart below <br><br> 
 			<img src='cid:trendchart_1'>
 			<br><br> Cheers,
-			<br>Calcium Omnibus";
+			<br>Calcium YourAppName";
 			
 			//Action the trend mail
 			//Create a new PHPMailer instance
@@ -395,9 +395,9 @@ else if(isset($_GET['action']) && $_GET['action']=="checknet"){
 			$mailid = explode(",",$_GET['mail']);
 			
 			//Set who the message is to be sent from
-			$mail->setFrom('sugato.b@gmail.com', 'Omnibus');
+			$mail->setFrom('yourname@gmail.com', 'YourAppName');
 			//Set an alternative reply-to address
-			$mail->addReplyTo('sugato.b@gmail.com', 'Sugato Banerjee');
+			$mail->addReplyTo('yourname@gmail.com', 'Jane Doe');
 			//Set who the message is to be sent to
 			foreach($mailid as $id) { $mail->addAddress(urldecode($id)); }
 			
