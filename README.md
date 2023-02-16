@@ -1,6 +1,8 @@
 # ISPManager 🌐🆘
 A tiny script for monitoring and logging your local broadband connection speed to check true quality of service and in case of a lost connection due to a hanged router, logs in to the admin panel and restarts the router automatically.
 
+In case your connection is acting patchy, the script can even login to your ISP's CRM tool and create a support ticket for flaky internet 😃
+
 ## Setup: 
 1. Setup a CRON job to run the connection monitoring script at a set frequency. For e.g. I had set mine to run every 5 minutes
 
@@ -20,6 +22,22 @@ A tiny script for monitoring and logging your local broadband connection speed t
 
 ```
 php -f /path/to/script/index.php mail=yourname@gmail.com,secondname@gmail.com
+```
+
+5. Setup your ISP's CRM tool url and page scheme here...
+
+```
+	$cc = new cURL(); 
+	
+	$password = file_get_contents('/volume1/web/ispmgr/password.txt');
+	
+	$loginattempt = $cc->post('http://isp.hathway.net:7406/selfcare/index.php?r=login/loginas','username=admin&password='.$password.'&servicetype=BB');
+	
+	//First lets check if the password has expired and needs changing
+	//die(print_r($loginattempt));
+	
+	if(strpos($loginattempt['response'],"\"status\":\"2\"") != FALSE){ //If the password is expired, let's change the password
+		
 ```
 
 Dependancies:
